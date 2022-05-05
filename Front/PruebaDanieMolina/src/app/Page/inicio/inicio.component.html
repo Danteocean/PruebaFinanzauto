@@ -1,0 +1,89 @@
+<app-nav></app-nav>
+
+<body class="align  bg_animate">
+
+  <div class="login">
+
+    <header class="lista__header">
+      <h2>Numero de cuentas</h2>
+    </header>
+
+
+    <div class="login__form">
+      <table class="table table-bordered">
+        <thead>
+          <th scope="col">Tipo de identificacion</th>
+          <th scope="col">Identificacion</th>
+          <th scope="col">Nombres</th>
+          <th scope="col">Apellidos</th>
+          <th scope="col">Razón Social</th>
+          <th scope="col">Celular</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Municipio</th>
+          <th scope="col">Departamento</th>
+          <th style="width:5px">Consultar</th>
+          <th style="width:5px">CREAR CUENTA</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let f of listCustomer">
+            <td class="centrar" *ngIf="f.tipoIdentificacion==1">Cedula de ciudadania</td>
+            <td class="centrar" *ngIf="f.tipoIdentificacion==2">Nit</td>
+            <td class="centrar">{{f.identificacion}}</td>
+            <td class="centrar">{{f.nombres}}</td>
+            <td class="centrar">{{f.apellidos}}</td>
+            <td class="centrar">{{f.razonSocial}}</td>
+            <td class="centrar">{{f.celular}}</td>
+            <td class="centrar">{{f.telefono}}</td>
+            <td class="centrar">{{f.municipio}}</td>
+            <td class="centrar">{{f.departamento}}</td>
+            <td><button class=" btn btn-primary btn-sm float " [routerLink]="['/Consulta',f.idCliente]"><i
+              class="bi bi-box-arrow-in-down-right"></i></button></td>
+            <td><button class=" btn btn-primary btn-sm float " (click)="saveCuenta(f,content)"><i
+              class="bi bi-bank2 "></i></button></td>
+
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="icons">
+
+    <symbol id="icon-lock" viewBox="0 0 448 512">
+      <path
+        d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z" />
+    </symbol>
+
+  </svg>
+  <div class="burbujas">
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+  </div>
+</body>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Alerta</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Ha creado la cuenta de ahorros numero {{numCuenta}} para el cliente {{usuario}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
+  </div>
+</ng-template>

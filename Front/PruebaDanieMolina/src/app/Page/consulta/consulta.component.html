@@ -1,0 +1,135 @@
+<app-nav></app-nav>
+
+<body class="align  bg_animate">
+
+  <div class="login">
+
+    <header class="lista__header">
+      <h2>CUENTAS</h2>
+    </header>
+    <div class="login__form">
+      <table class="table table-bordered">
+        <thead>
+          <th scope="col">NUMERO DE CUENTA</th>
+          <th scope="col">SALDO</th>
+          <th scope="col">TIPO DE TRANSACCIÓN</th>
+          <th scope="col">FECHA</th>
+
+          <th style="width:5px">Depósito</th>
+          <th style="width:5px">Retiro</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let f of listAccount | slice: (page-1) * pageSize : page * pageSize">
+            <td class="centrar">{{f.idCuenta}}</td>
+            <td class="centrar">{{f.saldo | currency}}</td>
+            <td class="centrar" *ngIf="f.tipoTransaccion == 1">DEPÓSITO</td>
+            <td class="centrar" *ngIf="f.tipoTransaccion == 2">RETIRO</td>
+            <td class="centrar" *ngIf="f.tipoTransaccion == 3">SALDO INSUFICIENTE</td>
+            <td class="centrar" *ngIf="f.tipoTransaccion == 4">NUEVO</td>
+            <td class="centrar">{{f.fecha| date :'dd-MMM-yy h:mm:ss a '}}</td>
+
+            <td><button class=" btn btn-primary btn-sm float " data-toggle="modal" (click)="deposito(content,f)"><i
+                  class="bi bi-box-arrow-in-down-right"></i></button></td>
+            <td><button class=" btn btn-danger btn-sm float " data-toggle="modal" (click)="retiro(content1,f)"><i
+                  class="bi bi-box-arrow-in-down-right"></i></button></td>
+          </tr>
+          <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="item"></ngb-pagination>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="icons">
+
+    <symbol id="icon-lock" viewBox="0 0 448 512">
+      <path
+        d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z" />
+    </symbol>
+
+  </svg>
+  <div class="burbujas">
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+  </div>
+</body>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">INGRESE NUEVO SALDO</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <form [formGroup]="deposit" (ngSubmit)="edit(1,content2)">
+      <div>
+        <label class="Container__add_label">SALDO</label>
+        <div class="Container__add_input">
+          <input type="currency" class="Container__add_inputo" formControlName="saldo" >
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success " (click)="edit(1,content2)" [disabled]="deposit.invalid">Guardar</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
+  </div>
+</ng-template>
+
+
+<ng-template #content1 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">INGRESE RETIRO</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <form [formGroup]="deposit" (ngSubmit)="edit(2,content2)">
+      <div>
+        <label class="Container__add_label">SALDO</label>
+        <div class="Container__add_input">
+          <input type="currency" class="Container__add_inputo" formControlName="saldo" >
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success " (click)="edit(2,content2)" [disabled]="deposit.invalid">Guardar</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
+  </div>
+</ng-template>
+
+
+
+<ng-template #content2 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Alerta</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    SALDO INSUFICIENTE
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
+  </div>
+</ng-template>
